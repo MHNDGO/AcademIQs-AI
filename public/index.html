@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcademIQs AI DEMO    </title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.cdnfonts.com/css/public-pixel" rel="stylesheet">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-light.css">  
+</head>
+<body>
+    <div class="loading" style="display: none;">
+        <div class="loading-animation">
+            <h1>Loading... </h1>
+            <img src="./images/loading.gif" alt="">
+            <p>Please Wait</p>
+            <a href="http://localhost:3000/"><button class="learn-more">Exit <i class="fa-solid fa-xmark button-icon"></i></button></a>
+        </div>
+    </div>
+
+    <form id="habit-form">
+      <h1 class="logo">AcademIQs AI (Demo)</h1>
+      <div class="options">
+        <br>
+        <h1>Exam Titles:</h1>
+        <br>
+        
+        <h3>Name:*</h3>
+        <br>
+
+        <input type="text" id="user-name" name="user_name" placeholder="Enter your name">
+        <br><br>  
+        <h3>Age:*</h3>
+        <br>
+
+        <input type="number" id="user-age" name="user_age" placeholder="Age" min="6" max="70">
+        <br><br> 
+         
+        <h3>Time in minutes:*</h3>
+      <br>
+        <input type="number" id="exam-duration" name="exam_duration" placeholder="Duration" min="5" max="360">
+        <br><br> 
+      
+        <h1>Exam Preferences:</h1>
+        <br>
+        <h3>Number Of Questions:*</h3>
+
+        <input type="number" id="question-count" name="question_count" placeholder="Questions" min="1" max="50">
+        <br><br> 
+        <h3>Do you want your Exam questions to ask about a concept or ask about a pasted paragraph?</h3>
+        <br>
+        
+        <label class="container2">Concept
+            <input type="radio" name="exam_type" id="exam-type-concept" value="concept about">
+            <span class="checkmark2"></span>
+          </label>
+          <label class="container2">Pasted Paragraph
+            <input type="radio"  name="exam_type" id="exam-type-paragraph" value="paragraph and only ask about this paragraph without mentioning anything else that says: ">
+            <span class="checkmark2"></span>
+          </label>
+       
+        <br>
+        <h3>Please Enter Concept Description or Pasted Paragraph here:*</h3>
+
+        <textarea id="exam-content" name="exam_content" placeholder="Enter content here"></textarea>
+        <br><br> 
+        <h3>What type of question do you want your exam to be?</h3>
+        <br>
+       
+        <label class="container"> <p class="exam-type-label">MCQ (Multiple Choice Questions)</p>
+            <input type="checkbox" name="question_type" id="question-type-mcq" value="mcq" >
+            <span class="checkmark"></span>
+          </label>
+          
+          <label class="container"><p class="exam-type-label">True or False</p>
+            <input type="checkbox" name="question_type" id="question-type-true-false" value="true_false">
+            <span class="checkmark"></span>
+          </label>
+          
+          <label class="container"> <p class="exam-type-label">Fill in the blank</p>
+            <input type="checkbox" name="question_type" id="question-type-fill-blank" value="fill_blank">
+            <span class="checkmark"></span>
+          </label>
+          
+          <label class="container"> <p class="exam-type-label">Computational (Needs you to type)</p>
+            <input type="checkbox" name="question_type" id="question-type-computational" value="computational">
+            <span class="checkmark"></span>
+          </label>
+  
+      
+            <h1>What difficulty do you want your exam to be?*</h1>
+            <br>
+    
+        <label class="container2">Easy
+            <input type="radio" name="difficulty_level" id="difficulty-easy" value="easy">
+            <span class="checkmark2"></span>
+          </label>
+          <label class="container2">Medium
+            <input type="radio" name="difficulty_level" id="difficulty-medium" value="medium">
+            <span class="checkmark2"></span>
+          </label>
+          <label class="container2">Hard
+            <input type="radio" name="difficulty_level" id="difficulty-hard" value="hard">
+            <span class="checkmark2"></span>
+          </label>
+       
+
+<br><br>
+<h1>What language do you want the exam to be in?:*</h1>
+<br>
+
+<label class="container2">English
+<input type="radio" name="exam_language" id="english" value="English">
+<span class="checkmark2"></span>
+</label>
+
+<label class="container2">Spanish
+<input type="radio" name="exam_language" id="spanish" value="Spanish">
+<span class="checkmark2"></span>
+
+</label>
+<label class="container2">German
+  <input type="radio" name="exam_language" id="german" value="German">
+  <span class="checkmark2"></span>
+  </label>
+  <label class="container2">French
+    <input type="radio" name="exam_language" id="french" value="French">
+    <span class="checkmark2"></span>
+    </label>
+
+        <label class="container2">Russian
+          <input type="radio" name="exam_language" id="japanese" value="Russian">
+          <span class="checkmark2"></span>
+          </label>
+
+<br><br>
+        <h1>Please give us any extra information you want to provide:</h1>
+        <br>
+
+        <textarea id="extra-information" name="extra_information" placeholder="Provide any additional information"></textarea>
+        <br><br>
+
+        <button class="learn-more">Submit <i class="fa-solid fa-arrow-right button-icon"></i></button>
+        <br><br>
+
+        <p>-Note that the Save as PDF feature isn't currently working for Arabic, Chinese and Japanese, these languages will be added in future releases.</p>
+        <p>-All questions marked wih * should be filled out.</p>
+          <p>Copyright 2024 </p>
+      </div>
+    </form>
+   
+    <div id="ai-response-container" style="display: none;">
+        <p id="ai-response"></p>
+        <div class="buttons">
+        <button class="buttonGo" id="remove-response-btn" title="Done"><i class="fa-solid fa-check"></i></button>
+        <button id="generate-pdf" class="buttonGo" title="Save As PDF"><i class="fa-solid fa-file"></i></button>
+      </div>
+
+    </div>
+    
+    <script type="module" src="./client.js"></script>
+ 
+</body>
+</html>
