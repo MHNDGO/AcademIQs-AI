@@ -86,7 +86,7 @@ async function handleFormSubmit(event) {
 
     // Send the prompt to the server
     try {
-        const response = await fetch('http://localhost:3300/test', {
+        const response = await fetch('https://academiqs-ai-production.up.railway.app/test', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
