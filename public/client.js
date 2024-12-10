@@ -120,11 +120,12 @@ document.getElementById("generate-pdf").addEventListener("click", () => {
         alert('Please generate questions first before creating a PDF.');
         return;
     }
+    pdfMake.fonts = {notoSans: {normal: ["https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap"]}}
 
     // Use the AI response to populate the PDF content
     const documentDefinition = {
         content: [
-            { text: 'AcademIQs Quiz', style: 'header' },
+            { text: 'بس يا معرض', style: 'header' },
             { text: `Date: ${new Date().getFullYear()}/${new Date().getMonth()}/${new Date().getDate()}`, style: 'header' },
             { text: `Target audience: ${document.getElementById('user-age').value} year old people`, style: 'header' },
             { text: `Name: ${document.getElementById('user-name').value}`, style: 'subheader' },
@@ -136,7 +137,8 @@ document.getElementById("generate-pdf").addEventListener("click", () => {
             header: {
                 fontSize: 18,
                 bold: true,
-                margin: [0, 0, 0, 10]
+                margin: [0, 0, 0, 10],
+                font:"notoSans"
             },
             subheader: {
                 fontSize: 14,
@@ -153,8 +155,8 @@ document.getElementById("generate-pdf").addEventListener("click", () => {
                 margin: [0, 10, 0, 0]
             }
         }
+       
     };
-
     // Generate the PDF and download it
     pdfMake.createPdf(documentDefinition).download(`${document.getElementById('user-name').value}-AcademIQs-quiz.pdf`);
 });
