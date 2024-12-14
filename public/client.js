@@ -161,3 +161,4 @@ document.getElementById("generate-pdf").addEventListener("click", () => {
 
 // Add event listener for form submission
 document.getElementById('habit-form').addEventListener('submit', handleFormSubmit);
+
