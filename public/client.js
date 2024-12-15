@@ -69,14 +69,14 @@ async function handleFormSubmit(event) {
         and generate ${questionCount} questions of a ${examType} ${examContent}, Make the questions ${difficulty} 
         difficulty and make them ${questionTypes.join(', ')}, Make space between a,b,c and d in MCQ questions.
         Then I want you to go ahead and give an answer sheet below the generated question with all the answers.
-        Also make sure the exam is in ${examLanguage} and adhere to ${examNotes}.
+        Also make sure the exam is in ${examLanguage}, if arabic is selcted as language, use arabic numerals and avoid using english symbols and replace them with their arabic counterparts. And adhere to ${examNotes}.
     `;
 
     console.log('Constructed Prompt:', prompt);
 
     // Send the prompt to the server
     try {
-        const response = await fetch('https://academiqs.up.railway.app/test', {
+        const response = await fetch('test', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -96,6 +96,8 @@ async function handleFormSubmit(event) {
         // Display the AI response
         aiResponseElement.innerHTML = `Quiz:<br>${formattedResponse}`;
         aiResponseContainer.style.display = 'block';
+        console.log(examLanguage)
+
     } catch (error) {
         console.error('Error:', error);
     } finally {
@@ -114,54 +116,110 @@ document.getElementById("generate-pdf").addEventListener("click", () => {
     // Define custom fonts
     pdfMake.fonts = {
         notoSans: {
-            normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
-            bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
-            italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
-            bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
+            normal: 'https://res.cloudinary.com/dlqtqzjbv/raw/upload/v1734217233/final.ttf',
+            bold: 'https://res.cloudinary.com/dlqtqzjbv/raw/upload/v1734217648/final-bold.ttf'
         }
     };
-
-    // Use the AI response to populate the PDF content
-    const documentDefinition = {
-        content: [
-            { text: 'بس يا معرض', style: 'header' },
-            { text: `Date: ${new Date().getFullYear()}/${new Date().getMonth()}/${new Date().getDate()}`, style: 'header' },
-            { text: `Target audience: ${document.getElementById('user-age').value} year old people`, style: 'header' },
-            { text: `Name: ${document.getElementById('user-name').value}`, style: 'subheader' },
-            { text: `Time: ${document.getElementById('exam-duration').value} minutes`, style: 'subheader' },
-            { text: aiResponse, style: 'question' },
-            { text: 'Good luck!', style: 'footer' },
-        ],
-        defaultStyle: {
-            font: 'notoSans'
-        },
-        styles: {
-            header: {
-                fontSize: 18,
-                bold: true,
-                margin: [0, 0, 0, 10]
+    let documentDefinition = "";
+    if(getSelectedCheckboxValues('exam_language')[0] === "Arabic"){
+        function processArabicText(text) {
+            return text
+                .split('\n') // Split by lines
+                .map(line =>
+                    line
+                        .split(' ') // Split line into words
+                        .reverse()  // Reverse word order
+                        .join(' ')  // Join them back into a line
+                )
+                .join('\n'); // Join lines back together
+        }
+        let arabicContent = processArabicText(aiResponse);
+    
+        // Use the AI response to populate the PDF content
+        documentDefinition = {
+            content: [
+                { text: 'AI اكاديميكس', style: 'header', alignment: 'right', rtl: true },
+                { text: `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()} : التاريخ `, style: 'header', alignment: 'right', rtl: true },
+                { text: `عامًا ${document.getElementById('user-age').value} المستهدف: الجمهور  `, style: 'header', alignment: 'right', rtl: true },
+                { text: `${document.getElementById('user-name').value} الاسم:`, style: 'subheader', alignment: 'right', rtl: true },
+                { text: `دقيقه ${document.getElementById('exam-duration').value} المده:`, style: 'subheader', alignment: 'right', rtl: true },
+                { text: arabicContent, style: 'question', alignment: 'right', rtl: true },
+                { text: ' سعيداً! حظاً ', style: 'footer', alignment: 'right', rtl: true },
+            ],
+            defaultStyle: {
+                font: 'notoSans'
             },
-            subheader: {
-                fontSize: 14,
-                bold: true,
-                margin: [0, 5, 0, 5]
-            },
-            question: {
-                fontSize: 12,
-                margin: [0, 5, 0, 5]
-            },
-            footer: {
-                fontSize: 10,
-                italics: true,
-                margin: [0, 10, 0, 0]
+            styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    margin: [0, 0, 0, 10]
+                },
+                subheader: {
+                    fontSize: 14,
+                    bold: true,
+                    margin: [0, 5, 0, 5]
+                },
+                question: {
+                    fontSize: 12,
+                    margin: [0, 5, 0, 5]
+                },
+                footer: {
+                    fontSize: 10,
+                    margin: [0, 10, 0, 0]
+                }
             }
-        }
-    };
-
+        };
+    }
+    else{
+        documentDefinition = {
+            content: [
+                { text: 'AcademIQs Quiz', style: 'header' },
+                { text: `Date: ${new Date().getFullYear()}/${new Date().getMonth()}/${new Date().getDate()}`, style: 'header' },
+                { text: `Target audience: ${document.getElementById('user-age').value} year old people`, style: 'header' },
+                { text: `Name: ${document.getElementById('user-name').value}`, style: 'subheader' },
+                { text: `Time: ${document.getElementById('exam-duration').value} minutes`, style: 'subheader' },
+                { text: aiResponse, style: 'question' },
+                { text: 'Good luck!', style: 'footer' },
+            ],
+            defaultStyle: {
+                font: 'notoSans'
+            },
+            styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    margin: [0, 0, 0, 10]
+                },
+                subheader: {
+                    fontSize: 14,
+                    bold: true,
+                    margin: [0, 5, 0, 5]
+                },
+                question: {
+                    fontSize: 12,
+                    margin: [0, 5, 0, 5]
+                },
+                footer: {
+                    fontSize: 10,
+                    margin: [0, 10, 0, 0]
+                }
+            }
+        };
+    
+    }
+  
     // Generate the PDF and download it
     pdfMake.createPdf(documentDefinition).download(`${document.getElementById('user-name').value}-AcademIQs-quiz.pdf`);
 });
 
 // Add event listener for form submission
 document.getElementById('habit-form').addEventListener('submit', handleFormSubmit);
+let okayWorkingButton = document.getElementById("warningOkayButton")
+let warningWindow = document.querySelector(".warning")
 
+okayWorkingButton.addEventListener("click", function(){
+
+    document.querySelector(".warning").style.display = "none"
+
+})

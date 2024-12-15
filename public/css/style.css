@@ -142,7 +142,7 @@ body {
   background: rgb(118, 118, 118);
 }
 form {
-  width: 100%; /* Full width */
+  width: 60%;
   padding: 10px;
   margin: 0;
   background: rgba(0, 0, 0, 0.18);
@@ -263,6 +263,8 @@ textarea:focus {
   background: rgba(0, 0, 0, 0.18);
   border-radius: 20px;
   margin: 10px;
+  border: 3px solid rgb(0, 0, 0, 0.1);
+
 }
 #ai-response {
   color: white;
@@ -344,6 +346,45 @@ textarea:focus {
   font-size: 35px;
   cursor: pointer;
   transition: 0.2s ease;
+}
+
+.warning{
+ width: 100%;
+ height: 100%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ background: rgba(0,0,0,0.7);
+ position: fixed;
+ z-index: 9999;
+ scroll-behavior: none;
+ 
+}
+.popup{
+  width: 38%;
+  height:fit-content;
+  padding: 10px;
+  background:red;
+  border-radius: 20px;
+  border: solid 1px rgba(255,255,255,0.5);
+  background: rgb(55, 55, 55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.button1{
+  width: 50%;
+  margin: 20px;
+}
+.warning-text{
+  width: 450px;
+  text-align: center;
+}
+.popup img{
+  width: 150px;
+  height: 150px;
+  margin-top: 30px;
 }
 .buttons {
   display: flex;
@@ -501,7 +542,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(118, 118, 118);
+  background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.8));
 }
 form {
   width: 50%; /* Full width */
@@ -577,7 +618,7 @@ textarea:focus {
   justify-content: center;
   color: white;
   transition: 0.2s ease;
-  background: rgba(0, 0, 0, 0.18);
+  background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.9));
 }
 .loading img {
   width: 70px;
@@ -624,6 +665,7 @@ textarea:focus {
   background: rgba(0, 0, 0, 0.18);
   border-radius: 20px;
   margin: 10px;
+  min-height: 100vh;
 }
 #ai-response {
   color: white;
@@ -812,7 +854,7 @@ textarea:focus {
   color: rgb(138, 166, 192);
 }
 .submit-button {
-  width: 100%;
+  
   height: 40px;
   border-radius: 25px;
   border: none;

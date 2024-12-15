@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Download</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Create an anchor element to trigger the download
+            const a = document.createElement("a");
+            a.href = "./"; // Replace with the file URL or path
+            a.download = "final-Regular.ttf"; // Replace with the desired download name
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    </script>
+</head>
+<body>
+    <h1>Your download should start automatically...</h1>
+    <p>If it doesn't, please <a href="./" download="final-Regular.ttf">click here</a>.</p>
+</body>
+</html>

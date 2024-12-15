@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,6 +31,15 @@
     />
   </head>
   <body>
+    <div class="warning">
+      <div class="popup">
+        <img src="./images/warning.png" alt="warning">
+        <h1>WARNING!!</h1>
+        <p class="warning-text">The version you are using of this website is the DEMO version, meaning it's still a work in progress, you may find errors, bugs, false information being generated. <br><br> By clicking Okay, you accept that you have been warned about the possible erros that may occur, and you also agree that most website features still don't work. </p>
+        <button class="submit-button button1" id="warningOkayButton"><p>Okay</p></button>
+
+      </div>
+    </div>
     <div class="loading" style="display: none">
       <div class="loading-animation">
         <h1>Loading...</h1>
@@ -42,7 +52,7 @@
       </div>
     </div>
 
-    <form id="habit-form">
+    <form id="habit-form" style="">
       <h1 class="logo" >AcademIQs AI (Demo)</h1>
       <div class="options">
         <br />
@@ -226,7 +236,16 @@
           />
           <span class="checkmark2"></span>
         </label>
-
+        <label class="container2"
+        >Arabic
+        <input
+          type="radio"
+          name="exam_language"
+          id="arabic"
+          value="Arabic"
+        />
+        <span class="checkmark2"></span>
+      </label>
         <label class="container2"
           >Spanish
           <input
@@ -237,6 +256,7 @@
           />
           <span class="checkmark2"></span>
         </label>
+        
         <label class="container2"
           >German
           <input type="radio" name="exam_language" id="german" value="German" />
@@ -270,8 +290,7 @@
         ></textarea>
         <br /><br />
 
-        <!-- <button class="learn-more">Submit <i class="fa-solid fa-arrow-right button-icon"></i></button> -->
-        <button class="submit-button"><p>Submit</p></button>
+        <button class="submit-button" style="width: 100%;"><p>Submit</p></button>
         <br /><br />
 
         <p>
@@ -283,62 +302,8 @@
         <br />
         <hr />
         <br />
-        <p>
-          -<a href="https://academiqs.up.railway.app" class="copyright-anchor"
-            >AcademIQs AI</a
-          >
-          © 2024 by
-          <a
-            href="https://discord.com/users/1180278004430147596"
-            class="copyright-anchor"
-          >
-            Mohanned Hemmat</a
-          >
-          is licensed under CC BY-NC-ND 4.0
-          <img
-            style="
-              height: 22px !important;
-              margin-left: 3px;
-              vertical-align: text-bottom;
-            "
-            src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"
-            alt=""
-          /><img
-            style="
-              height: 22px !important;
-              margin-left: 3px;
-              vertical-align: text-bottom;
-            "
-            src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"
-            alt=""
-          /><img
-            style="
-              height: 22px !important;
-              margin-left: 3px;
-              vertical-align: text-bottom;
-            "
-            src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"
-            alt=""
-          /><img
-            style="
-              height: 22px !important;
-              margin-left: 3px;
-              vertical-align: text-bottom;
-            "
-            src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1"
-            alt=""
-          />
-        </p>
-        <a
-          href="//www.dmca.com/Protection/Status.aspx?ID=555d8c4f-ea5d-4eb3-a19b-2864b5400c36"
-          title="DMCA.com Protection Status"
-          class="dmca-badge"
-        >
-          <img
-            src="https://images.dmca.com/Badges/dmca_protected_sml_120n.png?ID=555d8c4f-ea5d-4eb3-a19b-2864b5400c36"
-            alt="DMCA.com Protection Status"
-        /></a>
-        <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"></script>
+       
+       
       </div>
     </form>
 
