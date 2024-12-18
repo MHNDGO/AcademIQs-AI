@@ -1,5 +1,8 @@
 let aiResponse = ''; // Declare aiResponse in the global scope
+if(localStorage.getItem("termsaccepted") === "true"){
+    document.querySelector(".warning").style.display = "none"
 
+}
 // Function to get selected checkbox values
 function getSelectedCheckboxValues(name) {
     const checkboxes = document.getElementsByName(name);
@@ -65,12 +68,13 @@ async function handleFormSubmit(event) {
 
     // Construct the prompt for the AI
     const prompt = `
-        I want you to create questions for ${userAge} year old people which are in the same layout of an exam, Go ahead
-        and generate ${questionCount} questions of a ${examType} ${examContent}, Make the questions ${difficulty} 
-        difficulty and make them ${questionTypes.join(', ')}, Make space between a,b,c and d in MCQ questions.
-        Then I want you to go ahead and give an answer sheet below the generated question with all the answers.
-        Also make sure the exam is in ${examLanguage}, if arabic is selcted as language, use arabic numerals and avoid using english symbols and replace them with their arabic counterparts. And adhere to ${examNotes}.
-    `;
+    I want you to create questions for ${userAge} year old people which are in the same layout of an exam, Go ahead
+    and generate ${questionCount} questions of a ${examType} ${examContent}, Make the questions ${difficulty} 
+    difficulty and make them ${questionTypes.join(', ')}, Make space between a,b,c and d in MCQ questions.
+    Then I want you to go ahead and give an answer sheet below the generated question with all the answers.
+    Also make sure the exam is in ${examLanguage},in case arabic is selcted in language, Please use english numerals and mirror parantheses,
+     symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}.
+`;
 
     console.log('Constructed Prompt:', prompt);
 
@@ -221,5 +225,7 @@ let warningWindow = document.querySelector(".warning")
 okayWorkingButton.addEventListener("click", function(){
 
     document.querySelector(".warning").style.display = "none"
+    localStorage.setItem("termsaccepted", true);
+
 
 })
