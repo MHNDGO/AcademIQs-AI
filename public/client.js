@@ -98,7 +98,7 @@ async function handleFormSubmit(event) {
         let formattedResponse = aiResponse.replace(/\*/g, '').replace(/\n/g, '<br>');
 
         // Display the AI response
-        aiResponseElement.innerHTML = `Quiz:<br>${formattedResponse}`;
+        aiResponseElement.textContent = `Quiz:<br>${formattedResponse}`;
         aiResponseContainer.style.display = 'block';
         console.log(examLanguage)
 
