@@ -73,7 +73,7 @@ async function handleFormSubmit(event) {
     difficulty and make them ${questionTypes.join(', ')}, Make space between a,b,c and d in MCQ questions.
     Then I want you to go ahead and give an answer sheet below the generated question with all the answers.
     Also make sure the exam is in ${examLanguage},in case arabic is selcted in language, Please use english numerals and mirror parantheses,
-     symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}.
+     symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}, If the user asks for questions about HTMl or CSS or any code in general, please put the code in <code></code> tags so that it doesn't interfere with anything.
 `;
 
     console.log('Constructed Prompt:', prompt);
