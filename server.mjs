@@ -33,7 +33,7 @@ app.post('/test', async (request, response) => {
 
     try {
         // Use the Gemini model to generate content based on the prompt
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
         const result = await model.generateContent(prompt);
         const responseText = await result.response.text();
 
