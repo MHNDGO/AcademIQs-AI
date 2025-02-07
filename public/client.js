@@ -154,21 +154,47 @@ async function handleFormSubmit(event) {
     form.style.display = 'none';
     loadingDiv.style.display = 'block';
 
-    // Construct the prompt for the AI
-    const prompt = `
-    I want you to create questions for ${userAge} year old people which are in the same layout of an exam, Go ahead
-    and generate ${questionCount} questions of a ${examType} ${examContent}, Make the questions ${difficulty} 
-    difficulty and make them ${questionTypes.join(', ')}, Make space between a,b,c and d in MCQ questions.
-    Then I want you to go ahead and give an answer sheet below the generated question with all the answers.
-    Also make sure the exam is in ${examLanguage},in case arabic is selcted in language, Please use english numerals and mirror parantheses,
-     symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}, If the user asks for questions
-      about HTMl or CSS or any code in general, please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything.
-`;
+    const solveFromWebsite = solvePreference === 'solve-from-web';
+    const extractAsPDF = solvePreference === 'solve-as-pdf';
+
+    let prompt;
+    if (solveFromWebsite) {
+        prompt = `
+I want you to create questions for ${userAge} year old people which are in the same layout of an exam. Generate ${questionCount} questions of a ${examType} and make the 
+questions ${examDefinition}, make them ${difficulty} difficulty, make the types of questions ${questionTypes.join(', ')}, and for the answers, make sure there are no answers shown to the user excpet the data-correct attribute.
+Ensure the exam is in ${examLanguage}, and follow these notes: ${examNotes}. Make space between a,b,c and d in MCQ questions. If the user asks for questions about HTML or CSS or any code in general,
+please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything. OK, until now, these were all instructions, but there is something much
+more important I want you to do, you'll do the exact following:
+1-	I'll use your response as code for my website, so you have to do as I say, and you should present questions like this, the question statement itself, not the answer:
+<span class='ai-question'> (Question goes here) </span>
+2-	The answers av  ailable however should be presented like this:
+
+<label class="container2"> (Answer Goes here) <input type="radio" name="q(the number of the question)" value="(Answer goes here)" class='ai-answer'> <span class="checkmark2"></span></label>
+
+3-For the right question, you'll add a data-correct = 'true' attribute, like this:
+<label class="container2"> (Answer Goes here) <input type="radio" name="q(the number of the question)" value="(Answer goes here)" class='ai-answer'  data-correct='true'> <span class="checkmark2"></span></label>
+The finished product will look something like this, if we are talking about question number 4 it will look like this:
+
+<span class='ai-question'> 10. Which of the following is NOT found in plant cells? </span><br>
+<label class="container2"> a) Chloroplasts <input type="radio" name="q4" value="Chloroplasts' class='ai-answer'> <span class="checkmark2"></span></label>
+<label class="container2"> b) Cell wall <input type="radio" name="q4" value="Cell wall' class='ai-answer' > <span class="checkmark2"></span></label>
+<label class="container2"> c) Centrioles <input type="radio" name="q4" value="Centrioles' data-correct = 'true' class='ai-answer'> <span class="checkmark2"></span></label>
+<label class="container2"> d) Vacuoles <input type="radio" name="q4" value="Vacuoles' class='ai-answer'> <span class="checkmark2"></span></label>
+and never ever mention anything about this html in the response, the response should be nothing but the things i ordered, don't do anything else, I also want you not to use the html thing you put in the beginning of every exam, it's disturbing and I only want you to generate the questions and nothing else, and the questions' names`;
+    } else if (extractAsPDF) {
+        prompt = `
+I want you to create questions for ${userAge} year old people which are in the same layout of an exam. Generate ${questionCount} questions of a ${examType} and make the 
+questions ${examDefinition}, make them ${difficulty} difficulty, make the types of questions ${questionTypes.join(', ')}, and for the answers, make ${answerPreference}.
+Ensure the exam is in ${examLanguage}, Make space between a,b,c and d in MCQ questions.
+ in case arabic is selected in language, Please use english numerals and mirror parantheses,
+symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}, If the user asks for questions
+about HTML or CSS or any code in general, please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything.`;
+    }
 
     console.log('Constructed Prompt:', prompt);
 
     try {
-        const response = await fetch('https://academixai.up.railway.app/test/', {
+        const response = await fetch('https://acadmixai.up.railway.app/test/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
