@@ -194,7 +194,7 @@ about HTML or CSS or any code in general, please replace the "<" symbol &lt; and
     console.log('Constructed Prompt:', prompt);
 
     try {
-        const response = await fetch('https://academixai.up.railway.app/test/', {
+        const response = await fetch('https://academiqs.vercel.app/test/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
