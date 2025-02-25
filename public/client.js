@@ -4,9 +4,6 @@ let timer;
 let timeLeft;
 let aiResponse = ''; 
 
-if (localStorage.getItem("termsaccepted") === "true") {
-    document.querySelector(".warning").style.display = "none";
-}
 
 function getSelectedCheckboxValues(name) {
     const checkboxes = document.getElementsByName(name);
@@ -121,12 +118,15 @@ document.getElementById('next-page-button').addEventListener('click', () => {
 async function handleFormSubmit(event) {
     event.preventDefault();
 
+    // Hide the results container when generating a new exam
+    document.querySelector('#ai-results-container').style.display = 'none';
+
     const loadingDiv = document.querySelector('.loading');
     const aiResponseContainer = document.getElementById('ai-response-container');
     const aiPdfResponseContainer = document.getElementById('ai-pdf-response-container');
     const aiResponseElement = document.getElementById('ai-response');
     const aiResponsePdfElement = document.getElementById('ai-response-pdf');
-    let answerPreference = getSelectedRadioValue("answer-preference")
+    let answerPreference = getSelectedRadioValue("answer-preference");
 
     document.getElementById('timer-display').style.display = 'none';
 
@@ -167,19 +167,19 @@ please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't i
 more important I want you to do, you'll do the exact following:
 1-	I'll use your response as code for my website, so you have to do as I say, and you should present questions like this, the question statement itself, not the answer:
 <span class='ai-question'> (Question goes here) </span>
-2-	The answers av  ailable however should be presented like this:
+2-	The answers available however should be presented like this:
 
-<label class="container2"> (Answer Goes here) <input type="radio" name="q(the number of the question)" value="(Answer goes here)" class='ai-answer'> <span class="checkmark2"></span></label>
+<label class="container2"> (Answer Goes here) <input type="radio" name="q(the number of the question)" value="(Answer goes here)" class='ai-answer' data-selected='false'> <span class="checkmark2"></span></label>
 
 3-For the right question, you'll add a data-correct = 'true' attribute, like this:
-<label class="container2"> (Answer Goes here) <input type="radio" name="q(the number of the question)" value="(Answer goes here)" class='ai-answer'  data-correct='true'> <span class="checkmark2"></span></label>
+<label class="container2"> (Answer Goes here) <input type="radio" name="q(the number of the question)" value="(Answer goes here)" class='ai-answer' data-selected='false' data-correct='true'> <span class="checkmark2"></span></label>
 The finished product will look something like this, if we are talking about question number 4 it will look like this:
 
 <span class='ai-question'> 10. Which of the following is NOT found in plant cells? </span><br>
-<label class="container2"> a) Chloroplasts <input type="radio" name="q4" value="Chloroplasts' class='ai-answer'> <span class="checkmark2"></span></label>
-<label class="container2"> b) Cell wall <input type="radio" name="q4" value="Cell wall' class='ai-answer' > <span class="checkmark2"></span></label>
-<label class="container2"> c) Centrioles <input type="radio" name="q4" value="Centrioles' data-correct = 'true' class='ai-answer'> <span class="checkmark2"></span></label>
-<label class="container2"> d) Vacuoles <input type="radio" name="q4" value="Vacuoles' class='ai-answer'> <span class="checkmark2"></span></label>
+<label class="container2"> a) Chloroplasts <input type="radio" name="q4" value="Chloroplasts' class='ai-answer' data-selected='false'> <span class="checkmark2"></span></label>
+<label class="container2"> b) Cell wall <input type="radio" name="q4" value="Cell wall' class='ai-answer' data-selected='false'> <span class="checkmark2"></span></label>
+<label class="container2"> c) Centrioles <input type="radio" name="q4" value="Centrioles' data-correct = 'true' class='ai-answer' data-selected='false'> <span class="checkmark2"></span></label>
+<label class="container2"> d) Vacuoles <input type="radio" name="q4" value="Vacuoles' class='ai-answer' data-selected='false'> <span class="checkmark2"></span></label>
 and never ever mention anything about this html in the response, the response should be nothing but the things i ordered, don't do anything else, I also want you not to use the html thing you put in the beginning of every exam, it's disturbing and I only want you to generate the questions and nothing else, and the questions' names`;
     } else if (extractAsPDF) {
         prompt = `
@@ -211,6 +211,9 @@ about HTML or CSS or any code in general, please replace the "<" symbol &lt; and
             aiResponseElement.innerHTML = `Quiz:<br>${aiResponse.replace(/\*/g, '').replace(/\n/g, '<br>')}`;
             aiResponseContainer.style.display = 'block';
 
+            // Attach event listeners to the newly generated radio buttons
+            attachRadioButtonListeners();
+
             document.getElementById('timer-display').style.display = 'flex';
             timeLeft = examDuration * 60;
             startTimer(); 
@@ -228,11 +231,6 @@ about HTML or CSS or any code in general, please replace the "<" symbol &lt; and
 
 document.getElementById('habit-form').addEventListener('submit', handleFormSubmit);
 
-let okayWorkingButton = document.getElementById("warningOkayButton");
-okayWorkingButton.addEventListener("click", function() {
-    document.querySelector(".warning").style.display = "none";
-    localStorage.setItem("termsaccepted", true);
-});
 
 function handleOptionChange(value) {
     const conceptTextarea = document.getElementById('conceptTextarea');
@@ -594,11 +592,10 @@ function setProgress(progress){
   radialProgress.setAttribute("aria-valuenow", value);
 };
 
-function hideResultsButton(){
-    const aiResultsContainer = document.querySelector('#ai-results-container')
-
-    aiResultsContainer.style.display = 'none'
-    form.style.display = "block"
+function hideResultsButton() {
+    const aiResultsContainer = document.querySelector('#ai-results-container');
+    aiResultsContainer.style.display = 'none'; // Ensure this is hidden
+    form.style.display = "block";
 }
 function startTimer() {
     const timerDisplay = document.getElementById('timer-display'); 
@@ -670,7 +667,8 @@ function parseAIResponse(aiResponse) {
             if (sibling.tagName === 'LABEL' && sibling.classList.contains('container2')) {
                 const answerText = sibling.textContent.trim();
                 const isCorrect = sibling.querySelector('input[data-correct="true"]') !== null;
-                answers.push({ text: answerText, isCorrect });
+                const isSelected = sibling.querySelector('input[data-selected="true"]') !== null;
+                answers.push({ text: answerText, isCorrect, isSelected });
             }
             sibling = sibling.nextElementSibling;
         }
@@ -682,49 +680,37 @@ function parseAIResponse(aiResponse) {
 }
 function displayResults() {
     const mistakesDiv = document.querySelector('.mistakes');
-    const correctAnswers = getCorrectAnswers();
-    const userAnswers = getUserSelectedAnswers();
-    const questions = parseAIResponse(aiResponse);
+    mistakesDiv.innerHTML = ''; // Clear previous results
 
-    mistakesDiv.innerHTML = '';
+    const questions = parseAIResponse(aiResponse);
 
     questions.forEach((question, index) => {
         const questionDiv = document.createElement('div');
         questionDiv.classList.add('question');
 
         const questionText = document.createElement('p');
-        questionText.textContent = `${index + 1}. ${question.question}`;
+        questionText.textContent = `${question.question}`;
         questionDiv.appendChild(questionText);
-
-        const userAnswer = userAnswers[`q${index + 1}`];
-        const correctAnswer = correctAnswers[`q${index + 1}`];
 
         question.answers.forEach(answer => {
             const answerDiv = document.createElement('p');
             answerDiv.textContent = answer.text;
 
-            const isUserAnswer = userAnswer === answer.text;
-            const isCorrectAnswer = correctAnswer === answer.text;
-
-            let marker = '';
-            if (isUserAnswer && isCorrectAnswer) {
-                answerDiv.style.textDecoration = 'underline';
-                answerDiv.style.color = 'green';
-                marker = ' (Your answer, Correct)';
-            } else if (isUserAnswer) {
-                answerDiv.style.textDecoration = 'underline';
-                marker = ' (Your answer)';
-            } else if (isCorrectAnswer) {
-                answerDiv.style.color = 'green';
-                marker = ' (Correct)';
+            // Check if the answer is marked as selected
+            const selectedAnswer = document.querySelector(`input[name="${question.question}"][value="${answer.text}"]`);
+            if (selectedAnswer && selectedAnswer.getAttribute('data-selected') === 'true') {
+                answerDiv.style.textDecoration = 'underline'; // Underline selected answers
             }
 
-            if (marker) {
-                const markerSpan = document.createElement('span');
-                markerSpan.style.fontStyle = 'italic';
-                markerSpan.style.fontSize = '0.9em';
-                markerSpan.textContent = marker;
-                answerDiv.appendChild(markerSpan);
+            // Mark the correct answer in green
+            if (answer.isCorrect) {
+                answerDiv.style.color = 'green';
+                answerDiv.style.fontWeight = 'bold';
+            }
+
+            // If the user's answer is incorrect, mark it in red
+            if (selectedAnswer && selectedAnswer.getAttribute('data-selected') === 'true' && !answer.isCorrect) {
+                answerDiv.style.color = 'red';
             }
 
             questionDiv.appendChild(answerDiv);
@@ -739,10 +725,28 @@ document.getElementById('remove-response-btn').addEventListener('click', functio
     document.getElementById('timer-display').style.display = 'none';
 
     document.getElementById('ai-response-container').style.display = 'none';
-    document.querySelector("#ai-results-container").style.display = "none"
+    document.querySelector("#ai-results-container").style.display = "none"; // Ensure this is hidden
     document.getElementById('ai-response').innerHTML = '';
 
     form.style.display = 'block';
 
     aiResponse = ''; 
 });
+
+function attachRadioButtonListeners() {
+    // Only target radio buttons with the class 'ai-answer'
+    document.querySelectorAll('input.ai-answer[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            console.log(`Radio button ${this.value} selected.`); // Debugging: Log when a radio button is selected
+
+            // Reset all radio buttons in the same group to data-selected='false'
+            document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => {
+                r.setAttribute('data-selected', 'false');
+            });
+
+            // Set the selected radio button to data-selected='true'
+            this.setAttribute('data-selected', 'true');
+            console.log(`Updated ${this.value} to data-selected='true'.`); // Debugging: Log the update
+        });
+    });
+}

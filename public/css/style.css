@@ -49,7 +49,7 @@
   outline: none;
   background: white;
   color: black;
-
+  border: 2px solid black;
   font-size: 20px;
   align-items: center;
   transition: 0.3s ease;
@@ -87,7 +87,7 @@
 
 }
 #content-preview{
-  border: 2px solid white;
+  border: 2px solid black;
   padding: 5px;
   border-radius: 5px;
   min-height: 500px;
@@ -127,14 +127,7 @@ input[type="number"] {
 #question-count {
   width: 100px;
 }
-::selection {
-  background: white; /* WebKit/Blink Browsers */
-  color: black;
-}
-::-moz-selection {
-  background: white; /* Gecko Browsers */
-  color: black;
-}
+
 label {
   user-select: none;
 }
@@ -171,6 +164,7 @@ label {
   background: rgba(255, 255, 255, 0.062);
   border-radius: 5px;
   transition: 0.1s ease;
+  border: 2px solid black;
 }
 
 /* On mouse-over, add a grey background color */
@@ -213,21 +207,12 @@ label {
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-body {
-  font-family: NotoSans;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgb(118, 118, 118);
-  justify-content: center;
-}
+
 form {
-  width: 60%;
+  width: 100%;
   padding: 10px;
   margin: 0;
-  background: rgba(0, 0, 0, 0.18);
-  color: white;
-  border: 3px solid rgb(0, 0, 0, 0.1);
+  color: black;
   border-radius: 20px;
 
 }
@@ -242,11 +227,11 @@ form {
 input {
   background: rgba(255, 255, 255, 0.062);
   color: white;
-
+  width: 100%;
   border: 0;
   outline: 1px solid white;
   resize: none;
-  border-radius: 10px;
+  border-radius: 2px;
   padding: 10px;
   height: 40px;
   width: 300px;
@@ -258,7 +243,7 @@ input::placeholder {
   color: rgb(197, 197, 197);
 }
 input:focus {
-  outline: 8px solid white;
+  outline: 8px solid black;
 }
 textarea {
   background: rgba(255, 255, 255, 0.062);
@@ -298,9 +283,8 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: black;
   transition: 0.2s ease;
-  background: rgba(0, 0, 0, 0.18);
   top: 0px;
 }
 .loading img {
@@ -342,72 +326,12 @@ textarea:focus {
 }
 
 #ai-response {
-  color: white;
+  color: black;
 }
 
-.container2 {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  user-select: none;
-  transition: 0.1s ease;
-}
 
-/* Hide the browser's default radio button */
-.container2 input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
 
-/* Create a custom radio button */
-.checkmark2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  transition: 0.1s ease;
 
-  background-color: rgba(255, 255, 255, 0.062);
-  border-radius: 50%;
-}
-
-/* On mouse-over, add a grey background color */
-.container2:hover input ~ .checkmark2 {
-  background-color: rgba(255, 255, 255, 0.09);
-}
-
-/* When the radio button is checked, add a blue background */
-.container2 input:checked ~ .checkmark2 {
-  border: 2px solid white;
-}
-
-/* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark2:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the indicator (dot/circle) when checked */
-.container2 input:checked ~ .checkmark2:after {
-  display: block;
-}
-
-/* Style the indicator (dot/circle) */
-.container2 .checkmark2:after {
-  top: 3px;
-  left: 3.5px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: white;
-}
 .buttonGo {
   width: 60px;
   height: 60px;
@@ -513,14 +437,7 @@ input[type="number"] {
 #question-count {
   width: 100px;
 }
-::selection {
-  background: white; /* WebKit/Blink Browsers */
-  color: black;
-}
-::-moz-selection {
-  background: white; /* Gecko Browsers */
-  color: black;
-}
+
 label {
   user-select: none;
 }
@@ -593,43 +510,35 @@ label {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
+
 body {
   font-family: Georgia, 'Times New Roman', Times, serif;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.8));
+  align-items: stretch; /* Stretch children to fill the width */
+  background: white;
   background-size:contain;
+  justify-content: flex-start; /* Align content to the start */
+  width: 100%;
+  overflow-x: hidden;
 }
-form {
-  width: 50%; /* Full width */
-  padding: 35px;
-  margin: 15px;
-  background: rgba(0, 0, 0, 0.18);
-  color: white;
-  border-radius: 20px;
-}
+
+
 .container {
   width: 100%;
   max-width: 100vw;
   padding: 20px;
 }
 input {
-  background: rgba(255, 255, 255, 0.062);
   color: white;
   border: 0;
-  outline: 1px solid white;
+  outline: 1px solid black;
   resize: none;
   font-family: Georgia, 'Times New Roman', Times, serif;
   padding: 10px;
   height: 40px;
-  width: 300px;
+
+  width: 100%;
   margin-top: 10px;
   transition: 0.3s ease;
   font-size: 18px;
@@ -638,7 +547,7 @@ input::placeholder {
   color: rgb(197, 197, 197);
 }
 input:focus {
-  outline: 4px solid white;
+  outline: 5px solid #14c2a5;
 }
 #user-age{
   font-family: 'Times New Roman', Times, serif;
@@ -685,7 +594,7 @@ textarea:focus {
   justify-content: center;
   color: white;
   transition: 0.2s ease;
-  background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.9));
+  background: white;
 }
 .loading img {
   width: 70px;
@@ -725,124 +634,54 @@ textarea:focus {
   transition: 0.4s ease;
 }
 #ai-response-container {
-  width: 60%;
+  width: 100%;
   height: fit-content;
     padding: 20px; /* Add some padding */
   border-radius: 20px;
     overflow-y: auto; /* Allow scrolling if content exceeds height */
-    background: rgba(0, 0, 0, 0.18); /* Maintain the background style */
-    color: white; /* Ensure text color is white */
+    color: black; /* Ensure text color is white */
   margin: 10px;
-  border: 3px solid rgb(0, 0, 0, 0.1);
   min-height: 100vh;
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
   }
   #ai-pdf-response-container {
-    width: 60%;
+    width: 100%;
     height: fit-content;
       padding: 20px; /* Add some padding */
-    border-radius: 20px;
       overflow-y: auto; /* Allow scrolling if content exceeds height */
-      background: rgba(0, 0, 0, 0.18); /* Maintain the background style */
-      color: white; /* Ensure text color is white */
+      color: black; /* Ensure text color is white */
     margin: 10px;
-    border: 3px solid rgb(0, 0, 0, 0.1);
     min-height: 100vh;
     }
   #ai-results-container {
-    width: 60%;
+    width: 100%;
     height: fit-content;
       padding: 20px; /* Add some padding */
-    border-radius: 20px;
       overflow-y: auto; /* Allow scrolling if content exceeds height */
-      background: rgba(0, 0, 0, 0.18); /* Maintain the background style */
       color: white; /* Ensure text color is white */
     margin: 10px;
-    border: 3px solid rgb(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   position: relative;
+  color: black;
     }
 
 #ai-response {
-  color: white;
+  color: black;
 }
 
-.container2 {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  transition: 0.1s ease;
-}
 
-/* Hide the browser's default radio button */
-.container2 input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* Create a custom radio button */
-.checkmark2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  transition: 0.1s ease;
-
-  background-color: rgba(255, 255, 255, 0.062);
-  border-radius: 50%;
-}
-
-/* On mouse-over, add a grey background color */
-.container2:hover input ~ .checkmark2 {
-  background-color: rgba(255, 255, 255, 0.09);
-}
-
-/* When the radio button is checked, add a blue background */
-.container2 input:checked ~ .checkmark2 {
-  border: 2px solid white;
-}
-
-/* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark2:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the indicator (dot/circle) when checked */
-.container2 input:checked ~ .checkmark2:after {
-  display: block;
-}
-
-/* Style the indicator (dot/circle) */
-.container2 .checkmark2:after {
-  top: 3px;
-  left: 3.5px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: white;
-}
 .buttonGo {
   width: 60px;
   height: 60px;
   border-radius: 100%;
   outline: none;
+  color: white;
   border: none;
-  background: rgba(255, 255, 255, 0.7);
+  background: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -857,7 +696,7 @@ textarea:focus {
   margin-top: 20px;
 }
 .buttonGo:hover {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgb(39, 38, 38)
 }
 #user-age {
   width: 100px;
@@ -890,16 +729,16 @@ textarea:focus {
   position: fixed;
   left: 0;
   top: 0;
-  width: 280px;
+  width: 100%;
   height: 100px;
   font-weight: 800;
   font-size: 25px;
   justify-content: center;
   align-items: center;
   place-content: center;
-  margin: 10px;
+  margin: 2px;
   border-radius: 35px;
-  background: rgba(0,0,0,0.4);
+  background: black;
   border: 1px solid rgba(255,255,255,0.3);
   color: white;
 }
@@ -910,94 +749,8 @@ textarea:focus {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  
 }
-/* Media query */
-@media (max-width: 426px) {
-  form {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    overflow-y: auto;
-    margin: 0;
-    padding: 10px;
-    overflow-x: hidden;
-  }
-  .options {
-    font-size: 10px;
-  }
-  textarea {
-    width: 100%;
-  }
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .loading {
-    margin-top: 640px;
-  }
-  .loading-animation {
-    margin-bottom: 150px;
-  }
-  #ai-response-container {
-    width: 100vw; /* Full width */
-    height: 100vh; /* Full height */
-    padding: 20px; /* Add some padding */
-    border-radius: 0; /* Remove border radius */
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
-    background: rgba(0, 0, 0, 0.18); /* Maintain the background style */
-    color: white; /* Ensure text color is white */
-    margin: 0;
-  }
-  #ai-response-container {
-    width: 100vw; /* Full width */
-    height: 100vh; /* Full height */
-    padding: 20px; /* Add some padding */
-    border-radius: 0; /* Remove border radius */
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
-    background: rgba(0, 0, 0, 0.18); /* Maintain the background style */
-    color: white; /* Ensure text color is white */
-    margin: 0;
-  }
-}
-@media (min-width: 426px) and (max-width: 1024px) {
-  form {
-    width: 60vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    height: auto;
-  }
-  .loading {
-    margin-top: 640px;
-  }
-  .options {
-    font-size: 10px;
-  }
-  textarea {
-    width: 100%;
-  }
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #ai-response-container {
-    width: 100vw; /* Full width */
-    height: 100vh; /* Full height */
-    padding: 20px; /* Add some padding */
-    border-radius: 0; /* Remove border radius */
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
-    background: rgba(0, 0, 0, 0.18); /* Maintain the background style */
-    color: white; /* Ensure text color is white */
-    margin: 0;
-  }
-}
+/* f query */
+
 
 .copyright-anchor {
   color: rgb(138, 166, 192);
@@ -1028,6 +781,8 @@ textarea:focus {
   cursor: pointer;
   transition: 0.2s ease;
   margin-top: 10px;
+  margin-bottom:70px ;
+
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
 } 
 .okay-result-button p {
@@ -1078,8 +833,8 @@ textarea:focus {
   border-radius: 50%;
   z-index: -1;
   background: conic-gradient(
-    white, /* Progress color */
-    white var(--progress, 0%),
+    black, /* Progress color */
+    black var(--progress, 0%),
     var(--track-bg) var(--progress, 0%) 100%
   );
 
@@ -1095,7 +850,7 @@ textarea:focus {
 }
 .full-result{
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 .textresult{
   height: fit-content;
@@ -1111,6 +866,143 @@ textarea:focus {
   padding: 10px;
   background-color: rgba(255,255,255,0.1);
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 2px solid black;
 
+
+}
+/* Customize the radio buttons */
+
+
+
+/* Show the indicator (dot/circle) when checked */
+
+/* Customize the checkboxes */
+.container input:checked ~ .checkmark {
+  background-color: black; /* Change the checkbox background to black */
+}
+
+.container .checkmark:after {
+  border-color: white; /* Keep the checkmark white for contrast */
+  
+}
+
+/* Customize input fields */
+input {
+  color: black; /* Change input text color to black */
+  background: rgba(255, 255, 255, 0.9); /* Light background for better contrast */
+  border: 1px solid black; /* Add a black border */
+}
+
+input::placeholder {
+  color: rgba(0, 0, 0, 0.5); /* Placeholder text in dark gray */
+}
+
+input:focus {
+  outline: 2px solid black; /* Black outline on focus */
+}
+
+/* Customize textarea */
+textarea {
+  color: black; /* Change text color to black */
+  background: rgba(255, 255, 255, 0.9); /* Light background for better contrast */
+  border: 1px solid black; /* Add a black border */
+}
+
+textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5); /* Placeholder text in dark gray */
+}
+
+textarea:focus {
+  outline: 2px solid black; /* Black outline on focus */
+}
+
+/* Customize buttons */
+#importPdfButton,
+.choose-text,
+#prev-page-button,
+#next-page-button,
+.submit-button,
+.okay-result-button {
+  background-color: black; /* Change button background to black */
+  color: white; /* Change button text color to white */
+  border: 1px solid black; /* Add a black border */
+}
+
+#importPdfButton:hover,
+.choose-text:hover,
+#prev-page-button:hover,
+#next-page-button:hover,
+.submit-button:hover,
+.okay-result-button:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Slightly lighter black on hover */
+  color: white; /* Keep text white on hover */
+}
+
+/* Customize the loading animation */
+.loading {
+  background: white; /* Dark background for loading screen */
+  color: black; /* White text for loading screen */
+}
+/* Customize the radio buttons */
+.container2 {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container2 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border: 2px solid black; /* Black border by default */
+  background-color: transparent; /* Transparent background */
+  border-radius: 50%; /* Make it circular */
+  transition: 0.1s ease;
+}
+
+/* On mouse-over, add a grey background color */
+.container2:hover input ~ .checkmark2 {
+  background-color: rgba(0, 0, 0, 0.1); /* Light gray background on hover */
+}
+
+/* When the radio button is checked, keep the black border */
+.container2 input:checked ~ .checkmark2 {
+  border: 2px solid black; /* Keep the black border */
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark2:after {
+  content: "";
+  position: absolute;
+  display: none;
+  top: 3px;
+  left: 3.5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: black; /* Black inner dot */
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container2 input:checked ~ .checkmark2:after {
+  display: block; /* Show the inner dot when checked */
 }
