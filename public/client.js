@@ -163,7 +163,10 @@ async function handleFormSubmit(event) {
 I want you to create questions for ${userAge} year old people which are in the same layout of an exam. Generate ${questionCount} questions of a ${examType} and make the 
 questions ${examDefinition}, make them ${difficulty} difficulty, make the types of questions ${questionTypes.join(', ')}, and for the answers, make sure there are no answers shown to the user excpet the data-correct attribute.
 Ensure the exam is in ${examLanguage}, and follow these notes: ${examNotes}. Make space between a,b,c and d in MCQ questions. If the user asks for questions about HTML or CSS or any code in general,
-please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything. OK, until now, these were all instructions, but there is something much
+please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything, be sure to use trusted sources such as BYJU's or Khan academy, but if nothing was found try searching for alternative and also trusty websites,
+and something that you absolutely have to keep in mind, DO NOT, and I'm repeating, DO NOT, mess with the user in terms of questions, for example, you do a very strange bug in which when the user asks you to generate 30 questions, you generate 5, generate the full 30, generate all the questions needed,
+, and don't worry, the maximum is 30, so please, generate everything, there are children who will solve this exam, you don't want to destroy their dreams and education because you didn't obey these rules, please follow everything, please.
+OK, until now, these were all instructions, but there is something much
 more important I want you to do, you'll do the exact following:
 1-	I'll use your response as code for my website, so you have to do as I say, and you should present questions like this, the question statement itself, not the answer:
 <span class='ai-question'> (Question goes here) </span>
@@ -183,13 +186,16 @@ The finished product will look something like this, if we are talking about ques
 and never ever mention anything about this html in the response, the response should be nothing but the things i ordered, don't do anything else, I also want you not to use the html thing you put in the beginning of every exam, it's disturbing and I only want you to generate the questions and nothing else, and the questions' names`;
     } else if (extractAsPDF) {
         prompt = `
-I want you to create questions for ${userAge} year old people which are in the same layout of an exam. Generate ${questionCount} questions of a ${examType} and make the 
-questions ${examDefinition}, make them ${difficulty} difficulty, make the types of questions ${questionTypes.join(', ')}, and for the answers, make ${answerPreference}.
-Ensure the exam is in ${examLanguage}, Make space between a,b,c and d in MCQ questions.
- in case arabic is selected in language, Please use english numerals and mirror parantheses,
-symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}, If the user asks for questions
-about HTML or CSS or any code in general, please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything.`;
-    }
+        I want you to create questions for ${userAge} year old people which are in the same layout of an exam. Generate ${questionCount} questions of a ${examType} and make the 
+        questions ${examDefinition}, make them ${difficulty} difficulty, make the types of questions ${questionTypes.join(', ')}, and for the answers, make ${answerPreference}.
+        Ensure the exam is in ${examLanguage}, Make space between a,b,c and d in MCQ questions.
+         in case arabic is selected in language, Please use english numerals and mirror parantheses,
+        symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}, If the user asks for questions
+        about HTML or CSS or any code in general, please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything.
+        لآe sure to use trusted sources such as BYJU's or Khan academy, but if nothing was found try searching for alternative and also trusty websites,
+        and something that you absolutely have to keep in mind, DO NOT, and I'm repeating, DO NOT, mess with the user in terms of questions, for example, you do a very strange bug in which when the user asks you to generate 30 questions, you generate 5, generate the full 30, generate all the questions needed,
+        , and don't worry, the maximum is 30, so please, generate everything, there are children who will solve this exam, you don't want to destroy their dreams and education because you didn't obey these rules, please follow everything, please.`;
+            }
 
     console.log('Constructed Prompt:', prompt);
 
