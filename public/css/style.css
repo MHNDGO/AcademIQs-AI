@@ -724,11 +724,13 @@ textarea:focus {
 .number{
   font-family: consolas;
   font-weight: 400  ;
+  color:white;
 }
 #timer-display{
   position: fixed;
   left: 0;
   top: 0;
+  color:white;
   width: 100%;
   height: 100px;
   font-weight: 800;
@@ -740,6 +742,9 @@ textarea:focus {
   border-radius: 35px;
   background: black;
   border: 1px solid rgba(255,255,255,0.3);
+  
+}
+#timer-display{
   color: white;
 }
 /* Original rule */
