@@ -768,7 +768,7 @@ textarea:focus {
 }
 .okay-result-button {
   height: 40px;
-  width: 100px; /* Set a specific width */
+  width: 50px; /* Set a specific width */
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   outline: none;
@@ -780,9 +780,8 @@ textarea:focus {
   color: white;
   cursor: pointer;
   transition: 0.2s ease;
-  margin-top: 10px;
-  margin-bottom:70px ;
-
+  position: relative;
+  top: 50px;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
 } 
 .okay-result-button p {
@@ -807,7 +806,7 @@ textarea:focus {
 .RadialProgress {
   --hue: 220;
   --holesize: 65%;
-  --track-bg: rgba(255, 255, 255, 0.3); /* Circle background color */
+  --track-bg: rgba(0, 0, 0, 0.3); /* Circle background color */
   font-family: 'Times New Roman', Times, serif;
   height: 35vmin;
   width: 35vmin;
@@ -821,6 +820,8 @@ textarea:focus {
   font-weight: 700;
   font-size: max(10vmin, 1.4rem);
   border-radius: 50%; /* Ensure the border is circular */
+  align-self: center;
+  margin-top: 50px;
 }
 
 .RadialProgress::before {
@@ -851,13 +852,16 @@ textarea:focus {
 .full-result{
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .textresult{
   height: fit-content;
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  
   margin-right: 20px;
+  text-align: center;
 }
 .mistakes{
   width: 100%;

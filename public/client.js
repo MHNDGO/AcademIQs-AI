@@ -194,7 +194,7 @@ about HTML or CSS or any code in general, please replace the "<" symbol &lt; and
     console.log('Constructed Prompt:', prompt);
 
     try {
-        const response = await fetch('test', {
+        const response = await fetch('https://academobile.up.railway.app/test/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -591,7 +591,6 @@ function setProgress(progress){
   radialProgress.innerHTML = value;
   radialProgress.setAttribute("aria-valuenow", value);
 };
-
 function hideResultsButton() {
     const aiResultsContainer = document.querySelector('#ai-results-container');
     aiResultsContainer.style.display = 'none'; // Ensure this is hidden
