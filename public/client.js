@@ -4,6 +4,9 @@ let timer;
 let timeLeft;
 let aiResponse = ''; 
 
+if (localStorage.getItem("termsaccepted") === "true") {
+    document.querySelector(".warning").style.display = "none";
+}
 
 function getSelectedCheckboxValues(name) {
     const checkboxes = document.getElementsByName(name);
@@ -186,21 +189,21 @@ The finished product will look something like this, if we are talking about ques
 and never ever mention anything about this html in the response, the response should be nothing but the things i ordered, don't do anything else, I also want you not to use the html thing you put in the beginning of every exam, it's disturbing and I only want you to generate the questions and nothing else, and the questions' names`;
     } else if (extractAsPDF) {
         prompt = `
-        I want you to create questions for ${userAge} year old people which are in the same layout of an exam. Generate ${questionCount} questions of a ${examType} and make the 
-        questions ${examDefinition}, make them ${difficulty} difficulty, make the types of questions ${questionTypes.join(', ')}, and for the answers, make ${answerPreference}.
-        Ensure the exam is in ${examLanguage}, Make space between a,b,c and d in MCQ questions.
-         in case arabic is selected in language, Please use english numerals and mirror parantheses,
-        symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}, If the user asks for questions
-        about HTML or CSS or any code in general, please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything.
-        لآe sure to use trusted sources such as BYJU's or Khan academy, but if nothing was found try searching for alternative and also trusty websites,
-        and something that you absolutely have to keep in mind, DO NOT, and I'm repeating, DO NOT, mess with the user in terms of questions, for example, you do a very strange bug in which when the user asks you to generate 30 questions, you generate 5, generate the full 30, generate all the questions needed,
-        , and don't worry, the maximum is 30, so please, generate everything, there are children who will solve this exam, you don't want to destroy their dreams and education because you didn't obey these rules, please follow everything, please.`;
-            }
+I want you to create questions for ${userAge} year old people which are in the same layout of an exam. Generate ${questionCount} questions of a ${examType} and make the 
+questions ${examDefinition}, make them ${difficulty} difficulty, make the types of questions ${questionTypes.join(', ')}, and for the answers, make ${answerPreference}.
+Ensure the exam is in ${examLanguage}, Make space between a,b,c and d in MCQ questions.
+ in case arabic is selected in language, Please use english numerals and mirror parantheses,
+symbols like ( should become ), and symbols like ] should become [ and so on, And adhere to ${examNotes}, If the user asks for questions
+about HTML or CSS or any code in general, please replace the "<" symbol &lt; and replace the ">" &gt; so that it doesn't interfere with anything.
+لآe sure to use trusted sources such as BYJU's or Khan academy, but if nothing was found try searching for alternative and also trusty websites,
+and something that you absolutely have to keep in mind, DO NOT, and I'm repeating, DO NOT, mess with the user in terms of questions, for example, you do a very strange bug in which when the user asks you to generate 30 questions, you generate 5, generate the full 30, generate all the questions needed,
+, and don't worry, the maximum is 30, so please, generate everything, there are children who will solve this exam, you don't want to destroy their dreams and education because you didn't obey these rules, please follow everything, please.`;
+    }
 
     console.log('Constructed Prompt:', prompt);
 
     try {
-        const response = await fetch('https://academobile.up.railway.app/test/', {
+        const response = await fetch('test', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -237,6 +240,11 @@ and never ever mention anything about this html in the response, the response sh
 
 document.getElementById('habit-form').addEventListener('submit', handleFormSubmit);
 
+let okayWorkingButton = document.getElementById("warningOkayButton");
+okayWorkingButton.addEventListener("click", function() {
+    document.querySelector(".warning").style.display = "none";
+    localStorage.setItem("termsaccepted", true);
+});
 
 function handleOptionChange(value) {
     const conceptTextarea = document.getElementById('conceptTextarea');
@@ -597,6 +605,7 @@ function setProgress(progress){
   radialProgress.innerHTML = value;
   radialProgress.setAttribute("aria-valuenow", value);
 };
+
 function hideResultsButton() {
     const aiResultsContainer = document.querySelector('#ai-results-container');
     aiResultsContainer.style.display = 'none'; // Ensure this is hidden
@@ -658,22 +667,26 @@ function getUserSelectedAnswers() {
 
     return userAnswers;
 }
-function parseAIResponse(aiResponse) {
+function parseAIResponse() {
     const questions = [];
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(aiResponse, 'text/html');
+    const questionElements = document.querySelectorAll('.ai-question');
 
-    doc.querySelectorAll('.ai-question').forEach((question, index) => {
-        const questionText = question.textContent.trim();
+    questionElements.forEach((questionElement, index) => {
+        const questionText = questionElement.textContent.trim();
         const answers = [];
+        const questionName = `q${index + 1}`; // Assuming question names are q1, q2, etc.
 
-        let sibling = question.nextElementSibling;
+        // Find all answer labels for this question
+        let sibling = questionElement.nextElementSibling;
         while (sibling && !sibling.classList.contains('ai-question')) {
-            if (sibling.tagName === 'LABEL' && sibling.classList.contains('container2')) {
-                const answerText = sibling.textContent.trim();
-                const isCorrect = sibling.querySelector('input[data-correct="true"]') !== null;
-                const isSelected = sibling.querySelector('input[data-selected="true"]') !== null;
-                answers.push({ text: answerText, isCorrect, isSelected });
+            if (sibling.classList.contains('container2')) {
+                const input = sibling.querySelector('input');
+                if (input) {
+                    const answerText = sibling.textContent.trim();
+                    const isCorrect = input.hasAttribute('data-correct');
+                    const isSelected = input.checked; // Check if this radio is actually selected
+                    answers.push({ text: answerText, isCorrect, isSelected });
+                }
             }
             sibling = sibling.nextElementSibling;
         }
@@ -683,11 +696,12 @@ function parseAIResponse(aiResponse) {
 
     return questions;
 }
+
 function displayResults() {
     const mistakesDiv = document.querySelector('.mistakes');
-    mistakesDiv.innerHTML = ''; // Clear previous results
+    mistakesDiv.innerHTML = '';
 
-    const questions = parseAIResponse(aiResponse);
+    const questions = parseAIResponse(); // Don't pass aiResponse, use current DOM
 
     questions.forEach((question, index) => {
         const questionDiv = document.createElement('div');
@@ -701,20 +715,19 @@ function displayResults() {
             const answerDiv = document.createElement('p');
             answerDiv.textContent = answer.text;
 
-            // Check if the answer is marked as selected
-            const selectedAnswer = document.querySelector(`input[name="${question.question}"][value="${answer.text}"]`);
-            if (selectedAnswer && selectedAnswer.getAttribute('data-selected') === 'true') {
-                answerDiv.style.textDecoration = 'underline'; // Underline selected answers
+            // Highlight selected answer (whether correct or not)
+            if (answer.isSelected) {
+                answerDiv.style.textDecoration = 'underline';
             }
 
-            // Mark the correct answer in green
+            // Highlight correct answer
             if (answer.isCorrect) {
                 answerDiv.style.color = 'green';
                 answerDiv.style.fontWeight = 'bold';
             }
 
-            // If the user's answer is incorrect, mark it in red
-            if (selectedAnswer && selectedAnswer.getAttribute('data-selected') === 'true' && !answer.isCorrect) {
+            // Highlight incorrect selected answer
+            if (answer.isSelected && !answer.isCorrect) {
                 answerDiv.style.color = 'red';
             }
 
@@ -746,11 +759,11 @@ function attachRadioButtonListeners() {
 
             // Reset all radio buttons in the same group to data-selected='false'
             document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => {
-                r.setAttribute('data-selected', 'false');
+                r.dataset.selected = 'false'; // Use the `dataset` property for cleaner code
             });
 
             // Set the selected radio button to data-selected='true'
-            this.setAttribute('data-selected', 'true');
+            this.dataset.selected = 'true';
             console.log(`Updated ${this.value} to data-selected='true'.`); // Debugging: Log the update
         });
     });
