@@ -1,6 +1,6 @@
 let examType = '';
 const form = document.getElementById('habit-form');
-let timer;
+let timer = null; // Ensure this is declared at the top with your other variables
 let timeLeft;
 let aiResponse = ''; 
 
@@ -121,6 +121,12 @@ document.getElementById('next-page-button').addEventListener('click', () => {
 async function handleFormSubmit(event) {
     event.preventDefault();
 
+    // Clear any existing timer
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
+
     // Hide the results container when generating a new exam
     document.querySelector('#ai-results-container').style.display = 'none';
 
@@ -225,7 +231,8 @@ and something that you absolutely have to keep in mind, DO NOT, and I'm repeatin
 
             document.getElementById('timer-display').style.display = 'flex';
             timeLeft = examDuration * 60;
-            startTimer(); 
+            // In your handleFormSubmit function, where you call startTimer():
+startTimer(examDuration);  // Pass the examDuration value
         } else if (extractAsPDF) {
             aiResponsePdfElement.innerHTML = `Quiz:<br>${aiResponse.replace(/\*/g, '').replace(/\n/g, '<br>')}`;
             aiPdfResponseContainer.style.display = 'block';
@@ -611,8 +618,15 @@ function hideResultsButton() {
     aiResultsContainer.style.display = 'none'; // Ensure this is hidden
     form.style.display = "block";
 }
-function startTimer() {
+
+function startTimer(examDuration) {
+    // Clear any existing timer first
+    if (timer) {
+        clearInterval(timer);
+    }
+    
     const timerDisplay = document.getElementById('timer-display'); 
+    timeLeft = examDuration * 60; // Reset timeLeft
     updateTimerDisplay(timerDisplay, timeLeft); 
 
     timer = setInterval(() => {
@@ -631,7 +645,7 @@ function updateTimerDisplay(displayElement, time) {
     const seconds = time % 60;
 
     const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    displayElement.innerHTML = `<i class="fa-sharp fa-regular fa-alarm-clock" style="margin-right: 10px;"></i> Time left: ${formattedTime}`;
+    displayElement.innerHTML = `<i class="fa-sharp fa-regular fa-alarm-clock" style="margin-right: 10px;"></i> Time left: <span class='number'>${formattedTime}</span>`
 }
 
 const pdfOptionsSection = document.getElementById('pdf-options');
@@ -738,16 +752,16 @@ function displayResults() {
     });
 }
 document.getElementById('remove-response-btn').addEventListener('click', function () {
-    clearInterval(timer); 
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
     timeLeft = 0; 
     document.getElementById('timer-display').style.display = 'none';
-
     document.getElementById('ai-response-container').style.display = 'none';
-    document.querySelector("#ai-results-container").style.display = "none"; // Ensure this is hidden
+    document.querySelector("#ai-results-container").style.display = "none";
     document.getElementById('ai-response').innerHTML = '';
-
     form.style.display = 'block';
-
     aiResponse = ''; 
 });
 
