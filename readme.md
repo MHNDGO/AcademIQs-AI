@@ -1,3 +1,5 @@
+#AS OF NOW, PROJECT IS UNDER MAINTENANCE, PLEASE AWAIT FIXES
+
 # AcademIQs AI: An easy-to-use AI quiz generator
 
 ## Overview
